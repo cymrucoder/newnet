@@ -1,5 +1,7 @@
 package blarg.newnet;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -22,4 +24,28 @@ public class NetworkTest {
         assertEquals(6.5, output, 0.01);
     }
 
+    @Test
+    public void testCalculateError() {
+        List<Double[]> dataPoints = new ArrayList<>();
+        Double[] dataPointA = {2104.0, 399.9};// All this array stuff is horrible
+        Double[] dataPointB = {1600.0, 329.9};
+        Double[] dataPointC = {2400.0, 369.0};
+        dataPoints.add(dataPointA);
+        dataPoints.add(dataPointB);
+        dataPoints.add(dataPointC);
+        
+        Network errNetwork = new Network();
+        errNetwork.addNeuron(new Neuron(0.18, 0));
+        
+        assertEquals(2058.0, errNetwork.calculateError(dataPoints), 1.0);
+    }
+//    @Test
+//    public void testAdjust() {
+//        Network adjNetwork = new Network();
+//        adjNetwork.addNeuron(new Neuron(100.0, 150.0));// Based on example from http://jalammar.github.io/visual-interactive-guide-basics-neural-networks/
+//        
+//        
+//        
+//        double output = network.process()
+//    }
 }

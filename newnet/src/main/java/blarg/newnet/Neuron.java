@@ -18,11 +18,16 @@ public class Neuron {
          return (weight * input) + bias;
     }
 
+    // Weight and bias probably shouldn't be calculated in Network, should pass in error then let Neuron work it out
     public void setWeight(double weight) {
         this.weight = weight;
     }
     
     public void setBias(double bias) {
         this.bias = bias;
+    }
+    
+    public void adjustForError(double error) {
+        
     }
 }
