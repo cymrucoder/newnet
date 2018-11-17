@@ -24,8 +24,7 @@ public class Network {
         
         for (Neuron neuron : neurons) {
             tracker = neuron.process(input);
-        }
-        
+        }        
         return tracker;
     }
 }

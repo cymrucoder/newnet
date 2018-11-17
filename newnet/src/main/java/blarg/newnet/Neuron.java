@@ -16,5 +16,13 @@ public class Neuron {
 
     public double process(double input) {
          return (weight * input) + bias;
-    }    
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+    
+    public void setBias(double bias) {
+        this.bias = bias;
+    }
 }
