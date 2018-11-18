@@ -23,6 +23,17 @@ public class NetworkTest {
         double output = network.process(3.0);
         assertEquals(6.5, output, 0.01);
     }
+    
+    @Test
+    public void testProcess_withTwoInputs() {
+        Network networkTwoInputs = new Network();
+        networkTwoInputs.addNeuron(new Neuron(0.186, 3.6, -10.0));
+        Inputs inputs = new Inputs();
+        inputs.add(0, 2104.0);
+        inputs.add(1, 3.0);
+        double output = networkTwoInputs.process(inputs);
+        assertEquals(364.944, output, 0.1);
+    }
 
     @Test
     public void testCalculateError() {

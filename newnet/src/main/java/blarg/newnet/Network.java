@@ -28,6 +28,10 @@ public class Network {
         return tracker;
     }
     
+    double process(Inputs inputs) {// Currently only works for one output
+        return neurons.get(0).process(inputs);
+    }
+    
     public double calculateError(List<Double[]> testPoints) {
         if (testPoints.isEmpty()) { return 0.0; }// Don't want to divide by 0
         
@@ -76,5 +80,5 @@ public class Network {
                 network.undoAdjust();
             }
         }
-    }
+    }    
 }
