@@ -1,0 +1,30 @@
+package blarg.newnet;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ *
+ * @author cymrucoder
+ */
+public class Layer {
+
+    List<Neuron> neurons;
+    
+    public Layer() {
+        neurons = new ArrayList<>();
+    }
+    
+    public void addNeuron(Neuron neuron) {
+        neurons.add(neuron);
+    }
+    
+    public ValueTracker process(ValueTracker inputs) {
+        ValueTracker outputs = new ValueTracker();
+        
+        for (int i = 0; i < neurons.size(); i++) {
+            outputs.add(i, neurons.get(i).process(inputs));
+        }        
+        return outputs;
+    }
+}

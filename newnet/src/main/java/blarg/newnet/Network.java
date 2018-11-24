@@ -9,27 +9,23 @@ import java.util.List;
  */
 public class Network {
 
-    List<Neuron> neurons;
+    List<Layer> layers;
     
     public Network() {
-      neurons = new ArrayList<>();
-    }
-
-    public void addNeuron(Neuron neuron) {
-        neurons.add(neuron);
+        layers = new ArrayList<>();
     }
     
-    public double process(double input) {
-        double tracker = input;
-        
-        for (Neuron neuron : neurons) {
-            tracker = neuron.process(input);
+    public void addLayer(Layer layer) {
+        layers.add(layer);
+    }
+    
+    public ValueTracker process(ValueTracker inputs) {
+        ValueTracker tracker = inputs;
+
+        for (Layer layer : layers) {
+            tracker = layer.process(tracker);
         }        
         return tracker;
-    }
-    
-    double process(Inputs inputs) {// Currently only works for one output
-        return neurons.get(0).process(inputs);
     }
     
     public double calculateError(List<Double[]> testPoints) {
@@ -38,23 +34,29 @@ public class Network {
         double totalError = 0.0;
         
         for (Double[] testPoint : testPoints) {
-            double prediction = process(testPoint[0]);
+            ValueTracker vt = new ValueTracker();
+            vt.add(0, testPoint[0]);
+            //double prediction = process(testPoint[0]);
+            double prediction = process(vt).get(0);
             totalError += ((testPoint[1] - prediction) * (testPoint[1] - prediction));
         }                
         return totalError / (double) testPoints.size();
     }
     
-    public void adjustForError(double error) {
-        neurons.get(0).adjustForError(error);
+    public void adjustForError(double error) {// TODO doesn't work atm
+        //neurons.get(0).adjustForError(error);
     }
     
-    public void undoAdjust() {
-        neurons.get(0).undoAdjust();
+    public void undoAdjust() {// TODO doesn't work atm
+        //neurons.get(0).undoAdjust();
     }
     
-    public static void main(String[] args) {
+    public static void main(String[] args) {        
+        // Based on example from http://jalammar.github.io/visual-interactive-guide-basics-neural-networks/
         Network network = new Network();
-        network.addNeuron(new Neuron(0.18, 0.0));// Based on example from http://jalammar.github.io/visual-interactive-guide-basics-neural-networks/
+        Layer layer = new Layer();
+        layer.addNeuron(new Neuron(0.18, 0.0));
+        network.addLayer(layer);
         
         List<Double[]> dataPoints = new ArrayList<>();
         Double[] dataPointA = {2104.0, 399.9};// All this array stuff is horrible
