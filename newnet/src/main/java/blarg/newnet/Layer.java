@@ -27,4 +27,16 @@ public class Layer {
         }        
         return outputs;
     }
+
+    void adjustForError() {
+        for (Neuron neuron : neurons) {
+            neuron.adjustForError(0);
+        }
+    }
+
+    void undoAdjust() {
+        for (Neuron neuron : neurons) {
+            neuron.undoAdjust();
+        }
+    }
 }

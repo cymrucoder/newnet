@@ -73,20 +73,22 @@ public class Neuron {
                 
         switch (weightOrBias) {
             case 0:// TODO magic numbers actually just bin this whole thing because it's awful
-                int index = r.nextInt(weights.size());
-                double weight = weights.get(index).get();
-                if (weight == 0.0) {// Multiplying doesn't do anything if it's already 0
-                    int upOrDown = r.nextInt(2);
-                    if (upOrDown == 0) {
-                        weight += r.nextDouble();
+                //int index = r.nextInt(weights.size());
+                for (int i = 0; i < weights.size(); i++) {
+                    double weight = weights.get(i).get();
+                    if (weight == 0.0) {// Multiplying doesn't do anything if it's already 0
+                        int upOrDown = r.nextInt(2);
+                        if (upOrDown == 0) {
+                            weight += r.nextDouble();
+                        }
+                        else if (upOrDown == 1) {
+                            weight -= r.nextDouble();
+                        }
+                    } else {
+                        weight *= ((99.5 + r.nextDouble())) / 100.0;
                     }
-                    else if (upOrDown == 1) {
-                        weight -= r.nextDouble();
-                    }
-                } else {
-                    weight *= ((99.5 + r.nextDouble())) / 100.0;
+                    weights.get(i).set(weight);
                 }
-                weights.get(index).set(weight);
                 break;
             case 1:
                 int upOrDown = r.nextInt(2);
@@ -110,6 +112,9 @@ public class Neuron {
     
     public void undoAdjust() {
         //weight = oldWeight;// TODO This only works when there's one weight really.  Can't just loop through them all because you'll start resetting stuff when you shouldn't
+        for (Weight weight : weights) {
+            weight.reset();
+        }
         bias = oldBias;
     }    
 }
