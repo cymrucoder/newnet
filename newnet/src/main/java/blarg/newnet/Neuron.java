@@ -64,7 +64,12 @@ public class Neuron {
             tracker += (inputs.get(i) * weights.get(i).get());// TODO will break if inputs isn't the same size - this is an assumption for now, won't be later
         }
         tracker += bias;
-        return tracker;
+        
+        if (tracker > 0.0) {
+            return 1.0;
+        } else {
+            return 0.0;
+        }
     }
 
     public void adjustForError(double error) {
@@ -117,4 +122,17 @@ public class Neuron {
         }
         bias = oldBias;
     }    
+    
+    @Override
+    public String toString() {
+        String output = "Node start ";
+        
+        for (Weight weight : weights) {
+            output += weight.get() + " ";
+        }
+        
+        output += bias + " ";
+        
+        return output;
+    }
 }

@@ -39,4 +39,14 @@ public class Layer {
             neuron.undoAdjust();
         }
     }
+    
+    @Override
+    public String toString() {
+        String output = "";
+        for (Neuron neuron : neurons) {
+            output += neuron.toString() + " ";
+        }        
+        
+        return output;
+    }
 }

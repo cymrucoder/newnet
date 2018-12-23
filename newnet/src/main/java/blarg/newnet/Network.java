@@ -99,5 +99,15 @@ public class Network {
                 network.undoAdjust();
             }
         }
-    }    
+    }
+
+    @Override
+    public String toString() {
+        String output = "";
+        
+        for (Layer layer : layers) {
+            output += layer.toString() + " ";
+        }        
+        return output;        
+    }
 }
