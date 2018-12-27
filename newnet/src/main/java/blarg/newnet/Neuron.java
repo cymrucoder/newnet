@@ -1,7 +1,9 @@
 package blarg.newnet;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -33,24 +35,39 @@ public class Neuron {
         }
     }
     
-    List<Weight> weights;
+    //List<Weight> weights;
+    Map<Integer, Weight> weights;
     double bias;
     double oldBias;
     Random r;
+    boolean useActivationFunction;
         
-    public Neuron(double weight, double bias) {
-        this.bias = bias;
-        weights = new ArrayList<>();
-        weights.add(new Weight(weight));
+//    public Neuron(double weight, double bias) {
+//        this.bias = bias;
+//        weights = new ArrayList<>();
+//        weights.add(new Weight(weight));
+//        r = new Random();
+//    }
+//    
+//    public Neuron(double weight, double bias, double weight2) {
+//        this.bias = bias;
+//        weights = new ArrayList<>();
+//        weights.add(new Weight(weight));
+//        weights.add(new Weight(weight2));
+//        r = new Random();
+//    }
+    
+    public Neuron() {
         r = new Random();
+        weights = new HashMap<>();
+        bias = 1.0;
+        useActivationFunction = false;
     }
     
-    public Neuron(double weight, double bias, double weight2) {
-        this.bias = bias;
-        weights = new ArrayList<>();
-        weights.add(new Weight(weight));
-        weights.add(new Weight(weight2));
-        r = new Random();
+    public void addConnection(int index) {
+        if (!weights.containsKey(index)) {
+            weights.put(index, new Weight(1.0));
+        }
     }
 
     public double process(double input) {
@@ -65,10 +82,14 @@ public class Neuron {
         }
         tracker += bias;
         
-        if (tracker > 0.0) {
-            return 1.0;
+        if (useActivationFunction) {
+            if (tracker > 0.0) {
+                return 1.0;
+            } else {
+                return 0.0;
+            }
         } else {
-            return 0.0;
+            return tracker;
         }
     }
 
@@ -117,8 +138,8 @@ public class Neuron {
     
     public void undoAdjust() {
         //weight = oldWeight;// TODO This only works when there's one weight really.  Can't just loop through them all because you'll start resetting stuff when you shouldn't
-        for (Weight weight : weights) {
-            weight.reset();
+        for (Integer weightIndex : weights.keySet()) {
+            weights.get(weightIndex).reset();
         }
         bias = oldBias;
     }    
@@ -127,12 +148,28 @@ public class Neuron {
     public String toString() {
         String output = "Node start ";
         
-        for (Weight weight : weights) {
-            output += weight.get() + " ";
+        for (Integer weightIndex : weights.keySet()) {
+            output += weights.get(weightIndex) + " ";
         }
         
         output += bias + " ";
         
         return output;
+    }
+    
+    public void setUseActivationFunction(boolean useActivationFunction) {
+        this.useActivationFunction = useActivationFunction;
+    }
+    
+    protected void setWeights(List<Double> newWeights) {
+        weights.clear();
+        
+        for (int i = 0; i < newWeights.size(); i++) {
+            weights.put(i, new Weight(newWeights.get(i)));
+        }
+    }
+    
+    protected void setBias(double newBias) {
+        bias = newBias;
     }
 }

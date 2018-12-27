@@ -66,7 +66,7 @@ public class Network {
         // Based on example from http://jalammar.github.io/visual-interactive-guide-basics-neural-networks/
         Network network = new Network();
         Layer layer = new Layer();
-        layer.addNeuron(new Neuron(0.18, 0.0));
+        layer.addNeuron(new Neuron());
         network.addLayer(layer);
         
         List<Double[]> dataPoints = new ArrayList<>();

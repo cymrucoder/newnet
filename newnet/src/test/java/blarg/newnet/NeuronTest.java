@@ -1,5 +1,7 @@
 package blarg.newnet;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -12,7 +14,11 @@ public class NeuronTest {
     Neuron neuron;
     
     public NeuronTest() {
-        neuron = new Neuron(1.5, 2.0);
+        neuron = new Neuron();
+        List<Double> weights = new ArrayList<>();
+        weights.add(1.5);
+        neuron.setWeights(weights);
+        neuron.setBias(2.0);
     }
 
     @Test
