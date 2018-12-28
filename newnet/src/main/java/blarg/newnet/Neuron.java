@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 /**
  *
@@ -77,8 +78,8 @@ public class Neuron {
     double process(ValueTracker inputs) {
         double tracker = 0.0;
 
-        for (int i = 0; i < weights.size(); i++) {// "weights" is approximately the same as "connections" or something atm
-            tracker += (inputs.get(i) * weights.get(i).get());// TODO will break if inputs isn't the same size - this is an assumption for now, won't be later
+        for (Map.Entry<Integer, Weight> entry : weights.entrySet()) {// Adjust all inputs for weight and add them together
+            tracker += (inputs.get(entry.getKey()) * entry.getValue().get());// TODO What is inputs doesn't have the right indexes?  Would crash atm
         }
         tracker += bias;
         

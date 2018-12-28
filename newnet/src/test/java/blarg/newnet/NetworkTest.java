@@ -117,6 +117,21 @@ public class NetworkTest {
     }
     
     @Test
+    public void testProcess_withTwoInputsOnlySecondConnected() {// Regression test, used to throw a null pointer because it iterated from 0 when "weight 0" might not exist
+        Network networkSecondConnectedInput = new Network();
+        Neuron neuron = new Neuron();
+        neuron.addConnection(1);
+        Layer layer = new Layer();        
+        layer.addNeuron(neuron);
+        networkSecondConnectedInput.addLayer(layer);
+        ValueTracker inputs = new ValueTracker();
+        inputs.add(0, 3.0);
+        inputs.add(1, 7.0);
+        ValueTracker outputs = networkSecondConnectedInput.process(inputs);
+        assertEquals(8.0, outputs.get(0), 0.1);
+    }
+    
+    @Test
     public void testProcess_withSigmoidFunction_shouldReturnOne() {// Neuron works out 4.5, which is more than 0, so output 1
         Network networkOneNeuron = new Network();
         Layer layer = new Layer();
