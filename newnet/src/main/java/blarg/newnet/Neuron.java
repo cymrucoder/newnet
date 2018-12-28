@@ -101,8 +101,8 @@ public class Neuron {
         switch (weightOrBias) {
             case 0:// TODO magic numbers actually just bin this whole thing because it's awful
                 //int index = r.nextInt(weights.size());
-                for (int i = 0; i < weights.size(); i++) {
-                    double weight = weights.get(i).get();
+                for (Map.Entry<Integer, Weight> entry : weights.entrySet()) {
+                    double weight = entry.getValue().get();
                     if (weight == 0.0) {// Multiplying doesn't do anything if it's already 0
                         int upOrDown = r.nextInt(2);
                         if (upOrDown == 0) {
@@ -114,7 +114,7 @@ public class Neuron {
                     } else {
                         weight *= ((99.5 + r.nextDouble())) / 100.0;
                     }
-                    weights.get(i).set(weight);
+                    entry.getValue().set(weight);
                 }
                 break;
             case 1:
@@ -139,8 +139,8 @@ public class Neuron {
     
     public void undoAdjust() {
         //weight = oldWeight;// TODO This only works when there's one weight really.  Can't just loop through them all because you'll start resetting stuff when you shouldn't
-        for (Integer weightIndex : weights.keySet()) {
-            weights.get(weightIndex).reset();
+        for (Map.Entry<Integer, Weight> entry : weights.entrySet()) {
+            entry.getValue().reset();
         }
         bias = oldBias;
     }    
@@ -149,8 +149,8 @@ public class Neuron {
     public String toString() {
         String output = "Node start ";
         
-        for (Integer weightIndex : weights.keySet()) {
-            output += weights.get(weightIndex) + " ";
+        for (Map.Entry<Integer, Weight> entry : weights.entrySet()) {
+            output += entry.getValue() + " ";
         }
         
         output += bias + " ";
