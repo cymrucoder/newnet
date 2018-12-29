@@ -44,7 +44,7 @@ public class Layer {
     public String toString() {
         String output = "";
         for (Neuron neuron : neurons) {
-            output += neuron.toString() + " ";
+            output += neuron.toString() + " \n";
         }        
         
         return output;

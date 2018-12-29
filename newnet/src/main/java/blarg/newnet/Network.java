@@ -106,7 +106,7 @@ public class Network {
         String output = "";
         
         for (Layer layer : layers) {
-            output += layer.toString() + " ";
+            output += layer.toString();
         }        
         return output;        
     }

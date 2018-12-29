@@ -1,11 +1,9 @@
 package blarg.newnet;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 
 /**
  *
@@ -36,38 +34,22 @@ public class Neuron {
         }
     }
     
-    //List<Weight> weights;
     Map<Integer, Weight> weights;
     double bias;
     double oldBias;
     Random r;
     boolean useActivationFunction;
-        
-//    public Neuron(double weight, double bias) {
-//        this.bias = bias;
-//        weights = new ArrayList<>();
-//        weights.add(new Weight(weight));
-//        r = new Random();
-//    }
-//    
-//    public Neuron(double weight, double bias, double weight2) {
-//        this.bias = bias;
-//        weights = new ArrayList<>();
-//        weights.add(new Weight(weight));
-//        weights.add(new Weight(weight2));
-//        r = new Random();
-//    }
     
     public Neuron() {
         r = new Random();
         weights = new HashMap<>();
-        bias = 1.0;
+        bias = 0.0;
         useActivationFunction = false;
     }
     
     public void addConnection(int index) {
         if (!weights.containsKey(index)) {
-            weights.put(index, new Weight(1.0));
+            weights.put(index, new Weight(0.0));
         }
     }
 
@@ -150,10 +132,10 @@ public class Neuron {
         String output = "Node start ";
         
         for (Map.Entry<Integer, Weight> entry : weights.entrySet()) {
-            output += entry.getValue() + " ";
+            output += "Weight " + entry.getKey() + ": " + entry.getValue().get() + " ";
         }
         
-        output += bias + " ";
+        output += "bias: " + bias + " ";
         
         return output;
     }
