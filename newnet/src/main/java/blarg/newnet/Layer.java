@@ -49,4 +49,8 @@ public class Layer {
         
         return output;
     }
+
+    public int getNumberOfNeurons() {
+        return neurons.size();
+    }
 }

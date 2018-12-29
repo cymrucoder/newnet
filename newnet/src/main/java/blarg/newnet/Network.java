@@ -1,5 +1,8 @@
 package blarg.newnet;
 
+import com.opencsv.CSVReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +16,56 @@ public class Network {
     
     public Network() {
         layers = new ArrayList<>();
+    }
+    
+    public Network(Reader reader) throws IOException {
+        CSVReader csvReader = new CSVReader(reader);
+        List<String[]> readAll = csvReader.readAll();
+        layers = new ArrayList<>();
+        
+        for (int i = 0; i < readAll.get(0).length - 1; i++) {
+            layers.add(new Layer());
+        }
+        
+        //Set up input nodes
+        for (int i = 1; i < readAll.size() - 1; i++) {// This gets a bit annoiying because of the first line with headers
+            if (readAll.get(i)[0] != null && !readAll.get(i)[0].isEmpty()) {
+                Neuron neuron = new Neuron();
+                neuron.addConnection(i - 1);
+                neuron.setUseActivationFunction(true);
+                layers.get(0).addNeuron(neuron);
+            }
+        }
+        
+        for (int i = 1; i < readAll.size() - 1; i++) {
+            if (readAll.get(i)[1] != null && !readAll.get(i)[1].isEmpty()) {
+                Neuron neuron = new Neuron();                
+                String connections = readAll.get(i)[1];
+                
+                if ("all".equals(connections)) {
+                    for (int j = 0; j < layers.get(0).getNumberOfNeurons(); j++) {
+                        neuron.addConnection(j);
+                    }
+                }                
+                neuron.setUseActivationFunction(true);
+                layers.get(1).addNeuron(neuron);
+            }
+        }
+        
+        for (int i = 1; i < readAll.size() - 1; i++) {
+            if (readAll.get(i)[2] != null && !readAll.get(i)[2].isEmpty()) {
+                Neuron neuron = new Neuron();                
+                String connections = readAll.get(i)[2];
+                
+                if ("all".equals(connections)) {
+                    for (int j = 0; j < layers.get(1).getNumberOfNeurons(); j++) {
+                        neuron.addConnection(j);
+                    }
+                }                
+                neuron.setUseActivationFunction(true);
+                layers.get(2).addNeuron(neuron);
+            }
+        }
     }
     
     public void addLayer(Layer layer) {
