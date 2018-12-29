@@ -28,7 +28,7 @@ public class Network {
         }
         
         //Set up input nodes
-        for (int i = 1; i < readAll.size() - 1; i++) {// This gets a bit annoiying because of the first line with headers
+        for (int i = 1; i < readAll.size(); i++) {// This gets a bit annoying because of the first line with headers
             if (readAll.get(i)[0] != null && !readAll.get(i)[0].isEmpty()) {
                 Neuron neuron = new Neuron();
                 neuron.addConnection(i - 1);
@@ -37,7 +37,7 @@ public class Network {
             }
         }
         
-        for (int i = 1; i < readAll.size() - 1; i++) {
+        for (int i = 1; i < readAll.size(); i++) {
             if (readAll.get(i)[1] != null && !readAll.get(i)[1].isEmpty()) {
                 Neuron neuron = new Neuron();                
                 String connections = readAll.get(i)[1];
@@ -52,7 +52,7 @@ public class Network {
             }
         }
         
-        for (int i = 1; i < readAll.size() - 1; i++) {
+        for (int i = 1; i < readAll.size(); i++) {
             if (readAll.get(i)[2] != null && !readAll.get(i)[2].isEmpty()) {
                 Neuron neuron = new Neuron();                
                 String connections = readAll.get(i)[2];
