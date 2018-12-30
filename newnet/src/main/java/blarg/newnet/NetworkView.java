@@ -48,7 +48,7 @@ public class NetworkView extends JFrame {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             
-            int layerOffset = (int) ((double) NETWORK_VIEW_WIDTH / (double) (network.layers.size() + 1));
+            int layerOffset = (int) ((double) NETWORK_VIEW_WIDTH / (double) (network.layers.size() + 1));// This splits the panel up neatly and avoids the edges
             int neuronRadius = 20;
             
             for (int i = 0; i < network.layers.size(); i++) {
@@ -62,59 +62,12 @@ public class NetworkView extends JFrame {
                     if (i == 0) {// Input layer will have proper lines at some point
                         
                     } else {
-                        g.drawLine((layerOffset * (i + 1)) - neuronRadius, neuronOffset * (j + 1), (layerOffset * i) + neuronRadius, (previousLayerNeuronOffset * (0 + 1)));
+                        for (int k = 0; k < network.layers.get(i).getNeuron(j).getWeights().size(); k++) {// Draw a line for each connection backwards from this node
+                            g.drawLine((layerOffset * (i + 1)) - neuronRadius, neuronOffset * (j + 1), (layerOffset * i) + neuronRadius, (previousLayerNeuronOffset * (k + 1)));
+                        }
                     }
                 }
             }
-            
-//            boolean startSquareIsWhite = true;
-            
-//            for (int i = 0; i < 8; i++) {                
-//                boolean isWhite = startSquareIsWhite;
-//                for (int j = 0; j < 8; j++) {
-//                    if (isWhite) {
-//                        g.setColor(Color.WHITE);
-//                    } else {
-//                        g.setColor(Color.GRAY);
-//                    }
-//                    g.fillRect((BOARD_WIDTH / 8) * j, (BOARD_HEIGHT / 8) * i, (BOARD_WIDTH / 8), (BOARD_HEIGHT / 8));
-//                     isWhite = !isWhite;
-//                }
-//                startSquareIsWhite = !startSquareIsWhite;
-//            }
-//            
-//            Image image = null;
-//            
-//            try {
-//                image = ImageIO.read(new File("images\\mydonechessbits.png"));
-//            } catch (IOException ex) {
-//                Logger.getLogger(BoardView.class.getName()).log(Level.SEVERE, null, ex);
-//                System.exit(1);
-//            }
-//            
-//            if (boardInts != null) {
-//                if (boardInts.length != 0) {
-//                    if (boardInts[0].length != 0) {
-//                        for (int i = 0; i < boardInts.length; i++) {
-//                            for (int j = 0; j < boardInts[i].length; j++) {
-//                                if (boardInts[i][j] != Board.NONE) {
-//                                    int piece = boardInts[i][j];
-//                                    int color = Piece.BLACK;
-//                                    if (piece > Board.BLACK_KING) {
-//                                        color = Piece.WHITE;
-//                                    }
-//                                    
-//                                    piece = piece % Board.WHITE_PAWN;
-//                                    
-//                                    //int adjustedPiece = piece - 1;// 0 is NONE/no piece but the image starts with pawns so just need to take one off to line them up
-//                                    
-//                                    g.drawImage(image, 100 * i, 100 * j, (100 * i) + 100, (100 * j) + 100, (piece * 200), (color * 200), (piece * 200) + 200, (color * 200) + 200, rootPane);
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
         }
     }
 }

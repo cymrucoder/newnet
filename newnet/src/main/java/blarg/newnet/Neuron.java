@@ -155,4 +155,14 @@ public class Neuron {
     protected void setBias(double newBias) {
         bias = newBias;
     }
+    
+    public Map<Integer, Double> getWeights() {
+        Map<Integer, Double> currentWeights = new HashMap<>();
+        
+        for (Map.Entry<Integer, Weight> weight : weights.entrySet()) {
+            currentWeights.put(weight.getKey(), weight.getValue().get());
+        }
+        
+        return currentWeights;
+    }
 }
