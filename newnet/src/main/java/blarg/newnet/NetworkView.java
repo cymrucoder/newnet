@@ -78,7 +78,6 @@ public class NetworkView extends JFrame {
                                 g.setColor(new Color(0.0f, 1.0f, 0.0f));
                                 g2.setStroke(new BasicStroke((weight * weight) * 5.0f));// Square the weight to exaggerate the differences, multiplier so you can actually see something
                             } else {
-                                //float redVal = 0.7f + ((-weight / 10.0f) * 3.0f);
                                 g.setColor(new Color(1.0f, 0.0f, 0.0f));
                                 g2.setStroke(new BasicStroke((weight * weight) * 5.0f));
                             }
