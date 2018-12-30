@@ -144,9 +144,18 @@ public class Network {
     public static void main(String[] args) {        
         // Based on example from http://jalammar.github.io/visual-interactive-guide-basics-neural-networks/
         Network network = new Network();
+        network.enableView();
         Layer layer = new Layer();
         layer.addNeuron(new Neuron());
+        layer.neurons.get(0).addConnection(0);
+        layer.addNeuron(new Neuron());
+        layer.neurons.get(1).addConnection(1);
         network.addLayer(layer);
+        Layer layer2 = new Layer();
+        layer2.addNeuron(new Neuron());
+        layer2.neurons.get(0).addConnection(0);
+        layer2.neurons.get(0).addConnection(1);
+        network.addLayer(layer2);
         
         List<Double[]> dataPoints = new ArrayList<>();
         Double[] dataPointA = {2104.0, 3.0, 399.9};// All this array stuff is horrible
@@ -166,7 +175,7 @@ public class Network {
         
         System.out.println("Start error: " + lowestError);
         
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 500000; i++) {
             network.adjustForError(0.0);
             double error = network.calculateError(dataPoints);
             //System.out.println("Itr " + i + " error: " + error);
@@ -177,6 +186,7 @@ public class Network {
             } else {
                 network.undoAdjust();
             }
+            network.updateView();
         }
     }
 

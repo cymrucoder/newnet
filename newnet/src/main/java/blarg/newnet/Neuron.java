@@ -154,6 +154,10 @@ public class Neuron {
     
     protected void setBias(double newBias) {
         bias = newBias;
+    }    
+    
+    protected double getBias() {
+        return bias;
     }
     
     public Map<Integer, Double> getWeights() {

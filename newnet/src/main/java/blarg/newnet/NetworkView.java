@@ -65,6 +65,18 @@ public class NetworkView extends JFrame {
                     g.setColor(Color.BLACK);
                     g.fillOval((layerOffset * (i + 1)) - neuronRadius, (neuronOffset * (j + 1)) - neuronRadius, neuronRadius * 2, neuronRadius * 2);
                     
+                    double bias = network.layers.get(i).getNeuron(j).getBias();
+                    
+                    if (bias == 0.0) {// Green is +ive, red if -ive
+                        g.setColor(Color.LIGHT_GRAY);
+                    } else if (bias > 0.0) {
+                        g.setColor(new Color(0.0f, 1.0f, 0.0f));
+                    } else {
+                        g.setColor(new Color(1.0f, 0.0f, 0.0f));
+                    }
+                    
+                    g.fillOval((layerOffset * (i + 1)) - (neuronRadius / 2), (neuronOffset * (j + 1)) - (neuronRadius / 2), (neuronRadius), (neuronRadius));
+                    
                     if (i == 0) {// Input layer will have proper lines at some point
                         
                     } else {
