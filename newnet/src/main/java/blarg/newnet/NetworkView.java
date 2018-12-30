@@ -3,14 +3,9 @@ package blarg.newnet;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JPanel;
@@ -53,14 +48,23 @@ public class NetworkView extends JFrame {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             
-            int usableWidth = (int) ((double) NETWORK_VIEW_WIDTH * 0.8);
-            int leftBorder = (int) ((double) NETWORK_VIEW_WIDTH * 0.1);
-            int layerOffset = (int) ((double) usableWidth / (double) (network.layers.size() + 1));
+            int layerOffset = (int) ((double) NETWORK_VIEW_WIDTH / (double) (network.layers.size() + 1));
             int neuronRadius = 20;
             
             for (int i = 0; i < network.layers.size(); i++) {
+                int neuronOffset = (int) ((double) NETWORK_VIEW_HEIGHT / (double) (network.layers.get(i).getNumberOfNeurons() + 1));
+                int previousLayerNeuronOffset = (i == 0 ? -1 : (int) ((double) NETWORK_VIEW_HEIGHT / (double) (network.layers.get(i - 1).getNumberOfNeurons() + 1)));// Can't check previous layer if we're on layer 0
                 g.setColor(Color.BLACK);
-                g.fillOval(leftBorder + (layerOffset * (i + 1)) - neuronRadius, 100 - neuronRadius, neuronRadius * 2, neuronRadius * 2);
+                
+                for (int j = 0; j < network.layers.get(i).getNumberOfNeurons(); j++) {
+                    g.fillOval((layerOffset * (i + 1)) - neuronRadius, (neuronOffset * (j + 1)) - neuronRadius, neuronRadius * 2, neuronRadius * 2);
+                    
+                    if (i == 0) {// Input layer will have proper lines at some point
+                        
+                    } else {
+                        g.drawLine((layerOffset * (i + 1)) - neuronRadius, neuronOffset * (j + 1), (layerOffset * i) + neuronRadius, (previousLayerNeuronOffset * (0 + 1)));
+                    }
+                }
             }
             
 //            boolean startSquareIsWhite = true;
