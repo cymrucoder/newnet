@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Map;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JPanel;
@@ -62,8 +63,8 @@ public class NetworkView extends JFrame {
                     if (i == 0) {// Input layer will have proper lines at some point
                         
                     } else {
-                        for (int k = 0; k < network.layers.get(i).getNeuron(j).getWeights().size(); k++) {// Draw a line for each connection backwards from this node
-                            g.drawLine((layerOffset * (i + 1)) - neuronRadius, neuronOffset * (j + 1), (layerOffset * i) + neuronRadius, (previousLayerNeuronOffset * (k + 1)));
+                        for (Map.Entry<Integer, Double> entry : network.layers.get(i).getNeuron(j).getWeights().entrySet()) {// Draw a line for each connection backwards from this node
+                            g.drawLine((layerOffset * (i + 1)) - neuronRadius, neuronOffset * (j + 1), (layerOffset * i) + neuronRadius, (previousLayerNeuronOffset * (entry.getKey() + 1)));
                         }
                     }
                 }

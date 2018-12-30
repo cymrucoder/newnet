@@ -38,16 +38,24 @@ public class Network {
             }
         }
         
+        // TODO what on earth was I thinking when I wrote this instead of a loop please fix
         for (int i = 1; i < readAll.size(); i++) {
             if (readAll.get(i)[1] != null && !readAll.get(i)[1].isEmpty()) {
-                Neuron neuron = new Neuron();                
+                Neuron neuron = new Neuron();
                 String connections = readAll.get(i)[1];
                 
                 if ("all".equals(connections)) {
                     for (int j = 0; j < layers.get(0).getNumberOfNeurons(); j++) {
                         neuron.addConnection(j);
                     }
-                }                
+                } else {
+                    if (!connections.isEmpty()) {
+                        String connectionArray[] = connections.split(",");
+                        for (String connection : connectionArray) {
+                            neuron.addConnection(Integer.parseInt(connection));
+                        }
+                    }
+                }               
                 neuron.setUseActivationFunction(true);
                 layers.get(1).addNeuron(neuron);
             }
@@ -62,7 +70,14 @@ public class Network {
                     for (int j = 0; j < layers.get(1).getNumberOfNeurons(); j++) {
                         neuron.addConnection(j);
                     }
-                }                
+                } else {
+                    if (!connections.isEmpty()) {
+                        String connectionArray[] = connections.split(",");
+                        for (String connection : connectionArray) {
+                            neuron.addConnection(Integer.parseInt(connection));
+                        }
+                    }
+                }               
                 neuron.setUseActivationFunction(true);
                 layers.get(2).addNeuron(neuron);
             }
